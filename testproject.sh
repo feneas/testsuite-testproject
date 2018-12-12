@@ -18,7 +18,7 @@ psqlCount="$psql -q -c 'select count(*) from testtable;'"
 $psql -c 'create table if not exists testtable(id serial primary key);' || exit 1
 
 while true; do
-  cnt=$(eval $psqlCount |head -3 |tail -n 1)
+  cnt=$(eval $psqlCount |head -3 |tail -n 1 |tr -d '[:space:]')
   req=$(echo -e "HTTP/1.1 200 OK\n\n$cnt" | nc -c -l -p $PORT 0.0.0.0)
   if [[ $req =~ '/add' ]]; then
     eval $psqlAdd
