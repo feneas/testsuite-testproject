@@ -19,7 +19,7 @@ $psql -c 'create table if not exists testtable(id serial primary key);' || exit 
 
 while true; do
   cnt=$(eval $psqlCount |head -3 |tail -n 1 |tr -d '[:space:]')
-  req=$(echo -e "HTTP/1.1 200 OK\n\n$cnt" | nc -c -l -p $PORT 0.0.0.0)
+  req=$(echo $cnt |nc -l -p $PORT -q1)
   if [[ $req =~ '/add' ]]; then
     eval $psqlAdd
   fi
