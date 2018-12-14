@@ -22,14 +22,14 @@ while true; do
   req=$(echo -e "HTTP/1.1 200 OK\n\n$cnt" |nc -l -p $PORT -q1)
   remote=$(echo "$req" |grep GET |cut -d' ' -f2 |cut -d@ -f2)
   if [[ $req =~ '/add' ]]; then
-    if [[ "$remote" == "" ]]; then
+    if [[ "$remote" == "/add" ]]; then
       eval $psqlAdd
     else
       curl http://$remote/add
     fi
   fi
   if [[ $req =~ '/remove' ]]; then
-    if [[ "$remote" == "" ]]; then
+    if [[ "$remote" == "/remove" ]]; then
       eval $psqlRemove
     else
       curl http://$remote/remove
