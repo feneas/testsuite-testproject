@@ -20,10 +20,19 @@ $psql -c 'create table if not exists testtable(id serial primary key);' || exit 
 while true; do
   cnt=$(eval $psqlCount |head -3 |tail -n 1 |tr -d '[:space:]')
   req=$(echo -e "HTTP/1.1 200 OK\n\n$cnt" |nc -l -p $PORT -q1)
+  remote=$(echo "$req" |grep GET |cut -d' ' -f2 |cut -d@ -f2)
   if [[ $req =~ '/add' ]]; then
-    eval $psqlAdd
+    if [[ "$remote" == "" ]]; then
+      eval $psqlAdd
+    else
+      curl http://$remote/add
+    fi
   fi
   if [[ $req =~ '/remove' ]]; then
-    eval $psqlRemove
+    if [[ "$remote" == "" ]]; then
+      eval $psqlRemove
+    else
+      curl http://$remote/remove
+    fi
   fi
 done
