@@ -38,7 +38,7 @@ while inotifywait -qq -e modify $tmpLog; do
     if [[ "$remote" == "/add" ]]; then
       eval $psqlAdd
     else
-      #curl http://$remote/add
+      curl http://$remote/add
     fi
   fi
   if [[ $req =~ '/remove' ]]; then
