@@ -8,4 +8,3 @@ Related to [feneas.git.feneas.org/federation/testsuite](https://feneas.git.fenea
 * nmap
 * curl
 * inotify-tools
-
